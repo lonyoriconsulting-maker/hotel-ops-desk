@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hotel Ops Desk</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14606b">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;700&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f1;--card:#fff;--ink:#14262b;--mut:#5b6b69;--line:#d3dbd6;--acc:#14606b;--ok:#2f7d5b;--warn:#b7791f;--bad:#b4432f;--vac:#cfe3dd;--dty:#e3c27a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b1e;--card:#172629;--ink:#e6efec;--mut:#9bb0ac;--line:#2b3f42;--acc:#5bb6c2;--ok:#5ec79a;--warn:#e0b04f;--bad:#e8806b;--vac:#25423f;--dty:#8a6d2b}}
+:root[data-theme="dark"]{--bg:#0f1b1e;--card:#172629;--ink:#e6efec;--mut:#9bb0ac;--line:#2b3f42;--acc:#5bb6c2;--ok:#5ec79a;--warn:#e0b04f;--bad:#e8806b;--vac:#25423f;--dty:#8a6d2b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Libre Franklin",system-ui,sans-serif}
+h1,h2,strong{font-family:Newsreader,Georgia,serif}
+header{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:end;padding:20px 16px 8px;max-width:980px;margin:auto}
+h1{margin:0;font-size:30px}header p{margin:0;color:var(--mut)}
+h2{font-size:22px;margin:24px 0 8px}h3{font-size:16px;margin:20px 0 6px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);padding:0 12px;max-width:980px;margin:auto;z-index:2}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:12px 10px;color:var(--mut);font:600 15px inherit;font-family:inherit;white-space:nowrap;cursor:pointer}
+nav button.on{color:var(--ink);border-color:var(--acc)}
+main{max-width:980px;margin:auto;padding:0 16px 60px}
+button{font-family:inherit;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.ghost{background:none;border:1px solid var(--line);color:var(--ink);padding:6px 12px;border-radius:6px;margin-left:6px}
+.btn{background:var(--acc);color:var(--bg);border:0;padding:7px 14px;border-radius:6px;font-weight:600}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-top:1px solid var(--line)}
+.kp>div{padding:14px 14px 14px 0;border-bottom:1px solid var(--line)}
+.kp span{display:block;color:var(--mut);font-size:13px}.kp strong{font-size:38px;line-height:1.1;display:block}.kp em{font-style:normal;color:var(--mut);font-size:13px}
+.kp input{width:130px;font-size:22px;font-family:Newsreader,Georgia,serif;background:none;color:var(--ink);border:0;border-bottom:1px solid var(--line)}
+.fl{display:flex;align-items:center;gap:5px;margin:5px 0;flex-wrap:wrap}.fl b{width:18px;color:var(--mut);font-weight:600}
+.rm{width:46px;height:38px;border:0;border-radius:5px;font-size:13px;font-weight:600}
+.O{background:var(--acc);color:var(--bg)}.V{background:var(--vac);color:var(--ink)}.D{background:var(--dty);color:#1b1500}.X{background:var(--bad);color:#fff}
+.lg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin:8px 0}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.bars{display:flex;gap:8px;align-items:end;height:110px;border-bottom:1px solid var(--line)}.bars div{flex:1;text-align:center;font-size:12px;color:var(--mut)}.bars i{display:block;background:var(--acc);border-radius:3px 3px 0 0;opacity:.55}.bars div:last-child i{opacity:1}
+.note{border-left:3px solid var(--warn);padding:6px 12px;margin:14px 0;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--mut);font-weight:600;font-size:12px;border-bottom:1px solid var(--line);padding:6px 6px 6px 0}td{padding:9px 6px 9px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+.wrap{overflow-x:auto}
+.chip{padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid currentColor;white-space:nowrap}.chip.ok{color:var(--ok)}.chip.warn{color:var(--warn)}.chip.bad{color:var(--bad)}
+.sub{display:flex;gap:6px;margin:12px 0}.sub button{border:1px solid var(--line);background:none;color:var(--ink);padding:6px 12px;border-radius:99px}.sub .on{background:var(--ink);color:var(--bg)}
+.ck{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer;align-items:center}.ck input{width:18px;height:18px;accent-color:var(--acc)}
+.pg{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:6px 0 10px}.pg i{display:block;height:100%;background:var(--ok)}
+details{margin:10px 0}summary{cursor:pointer;font-weight:600}ol{margin:6px 0;padding-left:22px}
+td input[type=number]{width:62px;padding:5px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:5px}td input.lo{border-color:var(--bad);color:var(--bad)}
+.seg button{border:1px solid var(--line);background:none;color:var(--ink);padding:4px 10px;margin-right:-1px}.seg .s{background:var(--acc);color:var(--bg)}
+.add{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.add input,.add select{padding:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px}.add input{flex:1;min-width:180px}
+@media print{nav,.noprint,.add{display:none}}
+</style></head><body>
+<header><div><h1>Hotel Ops Desk</h1><p>Savanna Court Hotel &middot; 48 rooms &middot; demo data</p></div>
+<div class="noprint"><button class="ghost" data-a="print">Print or save PDF</button><button class="ghost" data-a="reset">Reset demo</button></div></header>
+<nav id="nav"></nav><main id="v"></main>
+<script>
+const K='hotelops1',$=s=>document.querySelector(s),F=n=>Math.round(n).toLocaleString('en-US'),P=n=>Math.round(n*100)+'%';
+const iso=d=>d.toISOString().slice(0,10),ago=n=>iso(new Date(Date.now()-n*864e5)),days=s=>Math.floor((Date.now()-new Date(s).getTime())/864e5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LIST={fd:['Check handover notes and overnight log','Compare room status with the housekeeping report','Review today\'s arrivals and departures','Test phones, POS and internet','Count the cash float','Greet each arrival within 30 seconds','Verify ID and complete the guest register','Update room status after every check-in and check-out'],
+hk:['Brief the team on departures and VIP rooms','Strip beds; used linen goes into bags','Dust top to bottom; clean bathroom in order','Vacuum or mop toward the door','Remake bed and restock amenities','Supervisor inspects every room','Report rooms Ready to the front desk','Log lost items and damages'],
+mt:['Walk all floors: lights, leaks, locks','Check hot water and water pressure','Check generator fuel and oil','Inspect fire extinguisher gauges and exits','Check AC in occupied rooms','Review open work orders','Test CCTV and security lights','Log defects and assign priority']};
+const SOP={fd:['Greet within 30 seconds','Confirm booking and verify ID','Record details in the guest register','Confirm rate, nights and payment; issue receipt','Explain breakfast, Wi-Fi, check-out and exits','Hand over key and update room status. Target: 5 minutes or less. Escalate overbooking or payment disputes to the duty manager.'],
+hk:['Air the room; remove trash and linen','Dust, then clean bathroom, then floor','Make bed; restock amenities','Supervisor inspects against the checklist','Report Ready in the system. Target: 30 minutes per room.'],
+mt:['Walk the property on a fixed route','Check water, power, fuel, locks, lights','Log every defect with location and priority','Urgent faults same day; high within 24 hours','Verify the fix, close the work order, record the cost.']};
+const NAMES={fd:'Front desk',hk:'Housekeeping',mt:'Maintenance'};
+const AUD=[['Fire extinguishers in date',1],['Exits clear and signed',1],['First-aid kit stocked',1],['Electrical: no exposed wiring',1],['Hot water in occupied rooms',0],['Guest register complete',0],['Fridge temperatures logged',1],['Check-in under 5 minutes',0],['PM schedule followed',0],['Complaints closed within 24 hours',0]];
+const TAB=[['today','Today'],['lists','Checklists and SOPs'],['maint','Maintenance'],['vend','Vendors and SLAs'],['audit','Audits']];
+let tab='today',sub='fd',S;
+function seed(){const b=[],r=[];for(let i=0;i<48;i++)b.push(i<33?'O':i<40?'V':i<45?'D':'X');b.forEach((v,i)=>r[(i*7)%48]=v);
+const t=(n,m)=>Array.from({length:8},(_,i)=>i<n);
+return{adr:85000,n:48,r,h:[29,31,27,36,42,40],c:{fd:t(3),hk:t(4),mt:t(2)},
+pm:[['Fire alarm test',7,5],['Generator service',30,34],['Water pump check',30,12],['Pest control',30,20],['AC filter cleaning',90,60],['Water tank cleaning',90,95],['Emergency lighting test',90,40],['Lift inspection',180,150],['Fire extinguisher service',365,300]].map(([n,f,a])=>({n,f,l:ago(a)})),
+wo:[{t:'Room 214 AC not cooling',p:'High',s:'Open',o:ago(1)},{t:'Corridor light flickering, floor 2',p:'Normal',s:'In progress',o:ago(3)},{t:'Room 107 slow hot water',p:'High',s:'Closed',o:ago(6),c:ago(4)},{t:'Lobby door closer loose',p:'Low',s:'Open',o:ago(8)},{t:'Kitchen drain slow',p:'Normal',s:'Closed',o:ago(10),c:ago(9)}],
+vend:[{n:'Fresh produce supplier',ot:92,q:97,r:90},{n:'Laundry',ot:96,q:94,r:95},{n:'Generator contractor',ot:80,q:98,r:70},{n:'Plumbing and electrical',ot:97,q:99,r:93}],
+a:[2,2,1,2,2,2,1,1,0,1]}}
+try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!S)S=seed();
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const V={
+today(){const c=k=>S.r.filter(x=>x==k).length,o=c('O'),x=c('X'),occ=o/S.n,rp=occ*S.adr,lost=x*S.adr*occ,hs=[...S.h,o],wk=hs.reduce((a,b)=>a+b,0)/(S.n*7);
+const dn=i=>i==6?'Today':new Date(Date.now()-(6-i)*864e5).toLocaleDateString('en',{weekday:'short'});
+let fl='';for(let f=0;f<4;f++)fl+=`<div class="fl"><b>${f+1}</b>`+S.r.slice(f*12,f*12+12).map((s,j)=>`<button class="rm ${s}" data-a="room" data-i="${f*12+j}" title="Click to change status">${(f+1)*100+j+1}</button>`).join('')+'</div>';
+return`<h2>Today</h2><div class="kp"><div><span>Occupancy</span><strong>${P(occ)}</strong><em>${o} of ${S.n} rooms sold</em></div>
+<div><span>ADR (TZS, editable)</span><input type="number" data-a="adr" value="${S.adr}" aria-label="Average daily rate"><em>average price per sold room</em></div>
+<div><span>RevPAR (TZS)</span><strong>${F(rp)}</strong><em>occupancy &times; ADR</em></div>
+<div><span>Rooms out of order</span><strong>${x}</strong><em>about ${F(lost)} TZS lost per night</em></div></div>
+<h3>Room board</h3><div class="lg"><span><i class="O"></i>Occupied ${o}</span><span><i class="V"></i>Vacant, ready ${c('V')}</span><span><i class="D"></i>Dirty ${c('D')}</span><span><i class="X"></i>Out of order ${x}</span></div>${fl}
+<p style="color:var(--mut);font-size:13px">Tap a room to change its status. The numbers above update instantly.</p>
+<h3>Last 7 days &middot; weekly occupancy ${P(wk)} &middot; weekly RevPAR ${F(wk*S.adr)} TZS</h3>
+<div class="bars">${hs.map((v,i)=>`<div><i style="height:${v/S.n*100}px"></i>${P(v/S.n)}<br>${dn(i)}</div>`).join('')}</div>
+<div class="note">${x} out-of-order room${x==1?'':'s'} still count as available rooms in RevPAR, so slow repairs lower it directly. Fixing them is worth about ${F(lost*30)} TZS a month.</div>`},
+lists(){const a=S.c[sub],pct=a.filter(Boolean).length/a.length;
+return`<h2>Checklists and SOPs</h2><div class="sub">${Object.keys(NAMES).map(k=>`<button class="${k==sub?'on':''}" data-a="sub" data-v="${k}">${NAMES[k]}</button>`).join('')}</div>
+<strong style="font-size:20px">${P(pct)} done</strong><div class="pg"><i style="width:${pct*100}%"></i></div>
+${LIST[sub].map((t,i)=>`<label class="ck"><input type="checkbox" data-a="chk" data-i="${i}" ${a[i]?'checked':''}>${t}</label>`).join('')}
+<p><button class="btn noprint" data-a="newshift">Start new shift</button></p>
+<details><summary>SOP: ${NAMES[sub]}</summary><ol>${SOP[sub].map(s=>`<li>${s}</li>`).join('')}</ol></details>`},
+maint(){const L=S.pm.map((p,i)=>({...p,i,left:p.f-days(p.l)})).sort((a,b)=>a.left-b.left),od=L.filter(p=>p.left<0).length,cl=S.wo.filter(w=>w.c),avg=cl.length?cl.reduce((a,w)=>a+(new Date(w.c)-new Date(w.o))/864e5,0)/cl.length:0,op=S.wo.filter(w=>w.s!='Closed').length;
+const st=l=>l<0?['bad','Overdue']:l<=7?['warn','Due soon']:['ok','On track'];
+return`<h2>Preventative maintenance</h2><div class="kp"><div><span>PM tasks on schedule</span><strong>${P((L.length-od)/L.length)}</strong><em>${od} overdue of ${L.length}</em></div><div><span>Open work orders</span><strong>${op}</strong><em>of ${S.wo.length} logged</em></div><div><span>Average days to close</span><strong>${avg.toFixed(1)}</strong><em>${cl.length} closed orders</em></div></div>
+<div class="wrap"><table><tr><th>Task</th><th>Every</th><th>Last done</th><th>Next due</th><th>Status</th><th></th></tr>${L.map(p=>{const s=st(p.left);return`<tr><td>${p.name||p.n}</td><td>${p.f} d</td><td>${p.l}</td><td>${p.left<0?'overdue by '+-p.left+' d':'in '+p.left+' d'}</td><td><span class="chip ${s[0]}">${s[1]}</span></td><td><button class="ghost" data-a="done" data-i="${p.i}">Mark done</button></td></tr>`}).join('')}</table></div>
+<h2>Work orders</h2><div class="add"><input id="wt" placeholder="New issue, e.g. Room 305 TV not working"><select id="wp"><option>Urgent</option><option>High</option><option selected>Normal</option><option>Low</option></select><button class="btn" data-a="add">Log work order</button></div>
+<div class="wrap"><table><tr><th>Issue</th><th>Priority</th><th>Opened</th><th>Status (tap to advance)</th></tr>${S.wo.map((w,i)=>`<tr><td>${esc(w.t)}</td><td>${w.p}</td><td>${w.o}</td><td><button class="ghost" style="margin:0" data-a="wo" data-i="${i}">${w.s}</button></td></tr>`).join('')}</table></div>
+<p style="color:var(--mut);font-size:13px">Priority guide: Urgent same day, High within 24 hours, Normal 3 to 5 days, Low scheduled.</p>`},
+vend(){const T=[95,97,90],K=['ot','q','r'];
+return`<h2>Vendors and SLA scorecards</h2><p style="color:var(--mut)">Monthly results in %. Targets: on-time delivery 95, quality accepted 97, response times met 90. Below target shows in red.</p>
+<div class="wrap"><table><tr><th>Vendor</th><th>On time</th><th>Quality</th><th>Response</th><th>Score</th><th>Action</th></tr>${S.vend.map((v,i)=>{const sc=(v.ot+v.q+v.r)/3,a=sc>=92?['ok','Keep']:sc>=85?['warn','Warn']:['bad','Replace or fix'];
+return`<tr><td>${esc(v.n)}</td>${K.map((k,j)=>`<td><input type="number" min="0" max="100" class="${v[k]<T[j]?'lo':''}" data-a="vin" data-i="${i}" data-k="${k}" value="${v[k]}"></td>`).join('')}<td>${sc.toFixed(0)}</td><td><span class="chip ${a[0]}">${a[1]}</span></td></tr>`}).join('')}</table></div>
+<div class="note">Keep at 92 or above, warn at 85 to 91, replace or fix below 85. Always hold a backup supplier for food, water and power.</div>`},
+audit(){const sc=S.a.reduce((a,b)=>a+b,0)/(AUD.length*2),r=sc>=.9?['ok','Good']:sc>=.75?['warn','Acceptable']:['bad','Corrective plan required'],gaps=AUD.map((a,i)=>({t:a[0],s:a[1],v:S.a[i]})).filter(g=>g.v<2).sort((a,b)=>b.s-a.s||a.v-b.v);
+return`<h2>Facility audit</h2><div class="kp"><div><span>Audit score</span><strong>${P(sc)}</strong><em><span class="chip ${r[0]}">${r[1]}</span></em></div></div>
+<div class="wrap"><table><tr><th>Check</th><th>Result</th></tr>${AUD.map((a,i)=>`<tr><td>${a[0]}${a[1]?' <span class="chip warn">Safety</span>':''}</td><td class="seg">${['Fail','Partial','Pass'].map((l,v)=>`<button class="${S.a[i]==v?'s':''}" data-a="aud" data-i="${i}" data-v="${v}">${l}</button>`).join('')}</td></tr>`).join('')}</table></div>
+<h3>Actions needed, safety first</h3>${gaps.length?`<ol>${gaps.map(g=>`<li>${g.s?'<b>Fix first:</b> ':''}${g.t} (${g.v?'partial':'failed'}). Assign an owner, set a due date and re-inspect.</li>`).join('')}</ol>`:'<p>No gaps found. Re-audit next month.</p>'}`}};
+function draw(){$('#nav').innerHTML=TAB.map(t=>`<button class="${t[0]==tab?'on':''}" data-a="tab" data-v="${t[0]}">${t[1]}</button>`).join('');$('#v').innerHTML=V[tab]()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.tagName=='INPUT'&&t.type=='number')return;const a=t.dataset.a,i=+t.dataset.i,d=t.dataset;
+if(a=='print'){window.print();return}
+if(a=='tab')tab=d.v;else if(a=='sub')sub=d.v;
+else if(a=='room'){const o=['V','O','D','X'];S.r[i]=o[(o.indexOf(S.r[i])+1)%4]}
+else if(a=='chk'){S.c[sub][i]=!S.c[sub][i]}
+else if(a=='newshift')S.c[sub]=S.c[sub].map(()=>false);
+else if(a=='done')S.pm[i].l=iso(new Date());
+else if(a=='wo'){const w=S.wo[i],o=['Open','In progress','Closed'];w.s=o[(o.indexOf(w.s)+1)%3];if(w.s=='Closed')w.c=iso(new Date());else delete w.c}
+else if(a=='add'){const x=$('#wt').value.trim();if(!x)return;S.wo.unshift({t:x,p:$('#wp').value,s:'Open',o:iso(new Date())})}
+else if(a=='aud')S.a[i]=+d.v;
+else if(a=='reset'){S=seed()}
+else return;
+save();draw()});
+document.addEventListener('change',e=>{const t=e.target,a=t.dataset.a;if(a=='vin')S.vend[+t.dataset.i][t.dataset.k]=Math.min(100,Math.max(0,+t.value||0));else if(a=='adr')S.adr=Math.max(0,+t.value||0);else return;save();draw()});
+draw();
+</script><script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'))</script>
+</body></html>
